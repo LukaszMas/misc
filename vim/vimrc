@@ -1,0 +1,174 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" .vimrc
+" Maintainer: Lukasz Masiukiewicz
+" License: www.opensource.org/licenses/bsd-license.php
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use Vim settings, rather than Vi settings. This must be first because it
+" changes other options as a side effect.
+set nocompatible
+set backspace=2
+filetype off
+
+"execute pathogen#infect()
+
+" --- Plugins (vim-plug) ------------------------------------------------------
+
+call plug#begin()
+
+" Add plugins
+
+Plug 'adelarsq/vim-matchit'
+Plug 'blueshirts/darcula'
+Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'leafgarland/typescript-vim'
+Plug 'majutsushi/tagbar'
+Plug 'rhysd/vim-clang-format'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-surround'
+"Plug 'fatih/vim-go'
+Plug 'Valloric/YouCompleteMe'
+Plug 'will133/vim-dirdiff'
+"Plug 'pangloss/vim-javascript'
+"Plug 'neoclide/coc.nvim', {'branch': 'releases/tag/v0.0.79'}
+"Plug 'vim-syntastic/syntastic'
+"Plug 'grailbio/bazel-compilation-database'
+
+call plug#end()
+filetype plugin indent on
+
+"packadd! vimspector
+"let g:vimspector_enable_mappings = 'HUMAN'
+
+"let g:ycm_global_ycm_extra_conf = '/home/lukasz/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+
+" --- File Types --------------------------------------------------------------
+
+" Markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd FileType markdown :setlocal tw=78
+
+" Typescript/Javascript/React
+autocmd BufNewFile,BufReadPost *.ts set filetype=typescript.tsx
+autocmd BufNewFile,BufReadPost *.tsx set filetype=typescript.tsx
+autocmd BufNewFile,BufReadPost *.js set filetype=typescript.tsx
+autocmd BufNewFile,BufReadPost *.jsx set filetype=typescript.tsx
+autocmd FileType typescript.tsx :setlocal sw=4 ts=4 sts=4
+
+" Java
+autocmd FileType java :setlocal sw=4 ts=4 sts=4
+" Python
+autocmd FileType python :setlocal sw=4 ts=4 sts=4
+autocmd FileType python compiler pylint
+" Bash (shell)
+autocmd FileType sh :setlocal sw=4 ts=4 sts=4
+
+" --- Display -----------------------------------------------------------------
+
+colorscheme desert
+
+" --- Colors ------------------------------------------------------------------
+
+set colorcolumn=80
+autocmd ColorScheme * highlight ColorColumn ctermbg=black guibg=black
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,h nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,h vnoremap <buffer><Leader>cf :ClangFormat<CR>
+autocmd FileType c,cpp,h ClangFormatAutoEnable
+let g:clang_format#detect_style_file=1
+let g:clang_format#auto_format=1
+
+" --- Status line -------------------------------------------------------------
+
+set laststatus=2
+set statusline=
+set statusline+=%-3.3n\
+set statusline+=%f\
+set statusline+=%h%m%r%w
+set statusline+=\[%{strlen(&ft)?&ft:'none'}]
+set statusline+=%=
+set statusline+=0x%-8B
+set statusline+=%-14(%l,%c%V%)
+set statusline+=%<%P
+
+" --- Misc --------------------------------------------------------------------
+
+" Turn off visual flash/bell
+set belloff=all
+" Turn on syntax highlighting.
+syntax on
+" Turn on line numbers for buffers.
+set number
+" Show line number, cursor position
+set ruler
+" Underline current line
+set cursorline
+" Display incomplete commands
+set showcmd
+" Error bells are displayed visually
+set visualbell
+" Show autocomplete menus
+set wildmenu
+" Show editing mode
+set showmode
+" Display one level of folds
+set foldcolumn=1
+"highlight FoldColumn guibg=black
+
+" Minimal number of screen lines to keep above and below the cursor
+set scrolloff=999
+" Use UTF-8
+set encoding=utf-8
+
+" Allow multiple buffers 'open' while editing.
+set hidden
+" Automatically indent when adding a curly bracket, etc.
+set smartindent
+" Tabs are converted to 2 spaces.
+set shiftwidth=2
+set tabstop=2
+set expandtab
+set smarttab
+set number
+
+set cinoptions=N-s,g0
+
+let g:go_highlight_functions=1
+
+" noremap <silent> <C-_> :call MyToggleNetrw()<CR>
+noremap <silent> <C-\> :NERDTreeToggle<CR>
+:inoremap ;dq ""<esc>i
+:inoremap ;sq ''<esc>i
+
+" --- tagbar ------------------------------------------------------------------
+
+let g:tagbar_width=60
+
+noremap <silent> <C-t> :TagbarToggle<CR>
+" --- ctrlp --------------------------------------------------------------------
+
+let g:ctrlp_match_window='min:1,max:40,results:100'
+let g:ctrlp_max_files=0
+let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_user_command =
+            \ ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" Use coc-tsserver extension for typescript
+" let g:coc_global_extensions = [ 'coc-tsserver' ]
+" let g:coc_global_extensions = [ 'coc-prettier' ]
+
+" Add command alias for calling Prettier on current buffer
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Apply YCM FixIt
+noremap <silent> <C-F9> :YcmCompleter FixIt<CR>
+
+map <C-K> :pyf /usr/cal/Cellar/clang-format/2018-04-24/share/clang/clang-format.py<cr>
+imap <C-K> <c-o>:pyf /usr/local/Cellar/clang-format/2018-04-24/share/clang/clang-format.py<cr>
