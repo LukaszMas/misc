@@ -1,0 +1,70 @@
+ name: <Project Name> CI
+
+ on:
+   # Pick when this action is triggered
+   #pull_request:
+   push:
+     paths:
+       - "file1.*"
+
+ jobs:
+
+   job_one:
+     name: Define container
+     runs-on: ubuntu-20.04
+     container:
+       image: ghcr.io/<my_image>:latest
+       credentials:
+         username: ${{ github.actor }}
+         password: ${{ secrets.GITHUB_TOKEN }}
+     steps:
+       - uses: actions/checkout@v3
+         with:
+           ssh-key: ${{ secrets.<SUBMODULE_SA_KEY> }}
+           submodules: true
+       - run: |
+           git submodule update --init --recursive
+
+       - name: Setup Python
+         uses: actions/setup-python@v4
+         with:
+           python-version: '3.x'
+           architecture: 'x64'
+
+       - uses: google-github-actions/auth@v0
+         with:
+           credentials_json: ${{ secrets.<THE_GCP_SA_KEY> }}
+
+       - name: Set up Cloud SDK
+         uses: google-github-actions/setup-gcloud@v0
+         with:
+           project_id: <project_id>
+
+       - name: Download dependencies from gcloud
+         working-directory: <dir>
+         run: |
+           mkdir -p <dir_name>
+           gsutil cp -r gs://<folder>
+
+       - name: Build program x
+         run: |
+           mkdir -p build
+           cd build
+           cmake <flags> <dir>
+           cmake --build . -- -j2
+
+       - name: Install additional dependenciens
+         working-directory: <my_dir/sub_dir>
+         run: |
+           apt-get install -y python3-pip
+           pip3 install numpy opencv-python
+
+       - name: Check for files existence
+         id: check_files
+         uses: andstor/file-existence-action@v1
+         with:
+           files: "fileA.json, fileB.csv, README.md, *.txt, etc"
+           allow_failure: 'true'
+
+       - name: Process files
+         run: echo All files exists!
