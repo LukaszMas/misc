@@ -47,6 +47,9 @@
 8. (Caveats) When using submodules in your actions files make sure you have  
    the submodule folder added in the `.dockerignore` or your local repository  
    does not have the ref folder because `docker cp` will fail to copy.
+    - Currently after checkout: (ex. `actions/checkout@v3`) you have to add  
+      the following to properly fetch submodules to checked repository:
+        - `git submodule update --init --recursive`:
 
 9. Additional resources:
     - [Gaurav Gahlot blog][3]
