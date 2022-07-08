@@ -1,4 +1,4 @@
-#How-To Install and get started with docker on linux:
+#How-To Use git with multiple keys ex. private & work (cmd):
 
 Ref guide at: [stackoverflow1][1]
 
@@ -8,9 +8,9 @@ Ref guide at: [stackoverflow1][1]
 2. (opt) Change username & email locally:
     - `git config --local user.name "Your Name"
     - `git config --local user.email "your@email.com
+    - `git config core.sshCommand "ssh -i ~/.ssh/id_rsa -F /dev/null"`
     - `git config credential.username "xxx" (TODO verify this)
-    - Per repo basis you could also manually modify this file:
-        `.git/config`
+    - Per repo basis you could also manually modify the `.git/config` file
 
 3. Utilize git enviorment variable `GIT_SSH_COMMAND` with any of git commands:
     - `GIT_SSH_COMMAND='ssh -i ~/.ssh/your_private_key' git <command>`
