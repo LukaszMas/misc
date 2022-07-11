@@ -1,4 +1,4 @@
-#How-To Install and get started with docker on linux:
+#ow-To Install and get started with docker on linux:
 
 1. Docker `run` command (start a container):
     - `docker run nginx`
@@ -23,9 +23,31 @@
 
 5. Docker `images` (list available images and their sizes):
     - `sudo docker images`
-    - You will see the all available images on your host
+    - You will see all the available images on your host
 
 6. Docker `rmi` (remove image):
+    - First you have to make sure that:
+        - No containers are running off the image before removing
+        - There are no dependent containers on the image
     - `sudo docker rmi <image_name>`
 
-TODO finish this document
+7. Docker  `pull` (pull the image and store on the host machine):
+    -  `sudo docker pull <image_name>`
+
+8. Docker `run` with command:
+    - `sudo docker run ubuntu sleep 5`
+
+9. Docker execute command on running container:
+    - `sudo docker exec <container_name> cat /etc/hosts`
+
+10. Docker run in (attached/detached mode) with simple web-app (port 8080):
+    - First, lets run the app in the attached mode:
+        - `docker run kodekloud/simple-webapp`
+        - To stop the container before it fnishes you have to press CTRL+C
+    - Second, lets run the app in the detached mode:
+        - `docker run -d kodekloud/simple-webapp`
+        - This will run the container in the background
+    - Now run the `docker ps` command to view the running containers
+    - If you want to attach back to the running container, run:
+    - `docker attach <container_id>`
+        - NOTE: You can specify just first few characters of the container id
