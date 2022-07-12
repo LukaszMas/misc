@@ -92,30 +92,18 @@ DEPS = $(wildcard $(INC_DIR)/*.h)
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 
-.DEFAULT_GOAL := $(BIN_DIR)/my_program
+.DEFAULT_GOAL := $(BIN_DIR)/<my_program>
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(DEPS) ;@mkdir -p $(@D)
 	$(CXX) -c -o $@ $< $(CXXFLAGS) $(LIBS)
 
-$(LIB_DIR)/%.so:
-	mkdir -p $(LIB_DIR)
-	cp $(VMB_LIB_DIR)/VimbaCPP/DynamicLib/x86_64bit/*.so $(LIB_DIR)
-
-$(BIN_DIR)/court: $(OBJS) $(LIB_DIR)/%.so
+$(BIN_DIR)/my_program: $(OBJS) $(LIB_DIR)/%.so
 	mkdir -p $(BIN_DIR)
 	$(CXX) -o $@ $(OBJS) $(CXXFLAGS) $(LDFLAGS) $(LIBS)
-	echo "Court built successfully"
-
-# --- build path routes .o file
-$(OBJ_DIR)/find_route.o: $(SRC_DIR)/find_route.re $(INC_DIR)/web_server.h
-	mkdir -p $(GEN_DIR)
-	re2c -o $(GEN_DIR)/find_route.cpp $(SRC_DIR)/find_route.re
-	$(CXX) $(CXXFLAGS) $(LIBS) -c -o $@ $(GEN_DIR)/find_route.cpp
-
+	echo "<my_program> built successfully"
 
 # --- Run ---------------------------------------------------------------------
 
-# --- run-court-daemon ---
 # (opt) add running command
 
 # --- Install -----------------------------------------------------------------
