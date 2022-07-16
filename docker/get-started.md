@@ -15,6 +15,9 @@
     - `sudo apt-get install docker.io`
     - Verify installation:
         - `sudo docker version`
+    - You might need to add adjust access level to `/var/run/docker.sock`:
+        - `sudo usermod -aG docker $USER`
+        - or `sudo chmod +600 /var/run/docker.sock`
 
 3. Run simple container to ensure all works fine
     - Go to the website: [docker.com][2] (most popular images)
