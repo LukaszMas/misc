@@ -13,7 +13,6 @@ Ref guide at: [Installing CMake][1]
     - `sudo make -j$<nproc> && sudo make install`
     - (confirm) `cmake --version`
 
-
 2. (opt) Installing cmake 3.16:
     - `sudo apt-get remove cmake`
     - `sudo apt-get install libssl-dev`
@@ -21,5 +20,10 @@ Ref guide at: [Installing CMake][1]
     - `tar -xvf cmake-3.16.5.tar.gz && cd cmake-3.16.5 && ./bootstrap`
     - `sudo make -j6 && sudo make install`
     - `cmake --version`
+
+3. (opt) Installing on Linux with `cmake-linux.sh` script:
+    - `wget -q -O cmake-linux.sh https://github.com/Kitware/CMake/releases/download/v3.19.6/cmake-3.19.6-Linux-x86_64.sh`
+    - `sh cmake-linux.sh -- --skip-license --prefix=$<MY_INSTALL_DIR>`
+    - `rm cmake-linux.sh`
 
 [1]: <https://cmake.org/install/> "installing CMake"
