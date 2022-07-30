@@ -16,5 +16,7 @@ GitHub: [grpc repo][1]
       - `sudo make install`
       - `popd`
       - Now add `/opt/grpc/bin` to your $PATH env variable
+      - Check protoc version:
+          `protoc --version`
 
 [1]: <https://github.com/grpc/grpc> "github grpc repo"
