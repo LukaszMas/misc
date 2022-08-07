@@ -17,6 +17,9 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+# Enable testing for this directory and below. See also the add_test() command.
+# Note that ctest expects to find a test file in the build directory root.
+# Therefore, this command should be in the source directory root.
 enable_testing()
 
 set(TEST_TARGET hello_test)
