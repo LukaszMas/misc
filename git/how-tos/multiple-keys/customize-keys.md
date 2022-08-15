@@ -6,8 +6,8 @@ Ref guide at: [stackoverflow1][1]
     - `git config --list`
 
 2. (opt) Change username & email locally:
-    - `git config --local user.name "Your Name"
-    - `git config --local user.email "your@email.com
+    - `git config --local user.name "Your Name"`
+    - `git config --local user.email "your@email.com`
     - `git config core.sshCommand "ssh -i ~/.ssh/id_rsa -F /dev/null"`
     - `git config credential.username "xxx" (TODO verify this)
     - Per repo basis you could also manually modify the `.git/config` file
