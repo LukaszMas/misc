@@ -71,3 +71,12 @@
 13. Docker run web-app and port access:
     - `docker run -p 80:5000 kodekloud/webapp`
     - The web-app becomes accessible inside the docker host via port 80
+
+14. Detach from running container:
+    - Press `Ctrl-p Ctrl-q` to detach
+    - Also, you can detach with Ctrl-c if you run your container with:
+        - `docker run --sig-proxy=false <container_id>`
+    - Attaching with overriding of the `--sig-proxy=false`:
+        - `docker attach --sig-proxy=false <container_id>`
+    - We can also define a separate detach key:
+        - `docker attach --detach-keys="ctrl-x" <container_id>`
